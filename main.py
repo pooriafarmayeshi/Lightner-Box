@@ -1,4 +1,6 @@
 import tkinter as tk
+import sqlite3
+
 
 class App:
     def __init__(self):
@@ -7,6 +9,8 @@ class App:
         self.root.title("Litner Box")
         self.center_window()
         self.initialize_ui()
+
+        DataBase()
     
     def center_window(self):
         # Opens the root at center
@@ -31,6 +35,19 @@ class App:
         # Run the mainloop
         self.root.mainloop()
 
+# The DataBase Class
+class DataBase():
+    def __init__(self):
+        self.connection()
+    
+    def connection(self):
+        conn = sqlite3.connect('mainDataBase.db')
+        cursor = conn.cursor()
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS employees (
+            id INTEGER PRIMARY KEY,
+            name TEXT,
+            salary REAL)''')
+        
 if __name__ == "__main__":
-    app = App()
-    app.run()
+    App().run()
